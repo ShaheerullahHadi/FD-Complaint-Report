@@ -1,0 +1,10 @@
+name: FormSubmit Handler
+on: [workflow_dispatch]
+jobs:
+  process_form:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Process form data
+        run: |
+          echo "Form submissions are handled client-side via FormSubmit.co"
