@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- [Previous HEAD content remains exactly the same] -->
+    <style>
+        /* [Previous CSS remains exactly the same] */
+    </style>
+</head>
+<body>
+    <!-- [Previous HTML form structure remains exactly the same until the script] -->
+    
+    <script>
+        // Updated JavaScript with better file handling
+        const EMAIL_DESTINATIONS = {
+            "Logistic Issues": "logistics@foreverdirect.eu",
+            "Quality Complaint": "quality@foreverdirect.eu",
+            "Health Complaint": "health@foreverdirect.eu"
+        };
+
+        document.getElementById('complaintForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data including files
+            const formData = new FormData(this);
+            const complaintType = document.querySelector('input[name="complaint_type"]:checked').value;
+            
+            // Configure FormSubmit
+            formData.append('_to', EMAIL_DESTINATIONS[complaintType]);
+            formData.append('_subject', `${complaintType} Submission`);
+            formData.append('_replyto', document.getElementById('email').value);
+            
+            // Send via FormSubmit with files
+            fetch('https://formsubmit.co/ajax/' + EMAIL_DESTINATIONS[complaintType], {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Complaint submitted successfully!');
+                this.reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Submission failed. Please try again or email us directly.');
+            });
+        });
+
+        // [Keep the health fields toggle code from before]
+    </script>
+</body>
+</html>
